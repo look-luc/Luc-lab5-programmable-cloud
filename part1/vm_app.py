@@ -44,12 +44,75 @@ def create_instance(
     access_config.type_ = "ONE_TO_ONE_NAT"
     network_interface.access_configs = [access_config]
 
+    firewall_client = compute_v1.FirewallsClient()
+    try:
+        firewall_client.get(project=project_id, firewall="allow-5000")
+    except Exception:
+        firewall_rule = compute_v1.Firewall(
+            name="allow-tcp-5000",
+            direction="INGRESS",
+            priority=1000,
+            network="global/networks/default",
+            allowed=[
+                compute_v1.Allowed(
+                    I_p_protocol="tcp",
+                    ports=["5000"]
+                )
+            ],
+            source_ranges=["0.0.0.0/0"],
+            target_tags=["allow-5000"]
+        )
+        print("Creating firewall rule 'allow-tcp-5000'...")
+
+        operation = firewall_client.insert(
+            project=project_id,
+            firewall_resource=firewall_rule
+        )
+
+        # Wait for the operation to complete
+        operation.result()
+        print("Firewall rule successfully created!")
+
+    with open('setup.sh', 'r') as file:
+        bash_file = file.read()
+
+    metadata = compute_v1.Metadata(
+        items=[
+            compute_v1.Items(
+                key="startup-script",
+                value=bash_file
+            )
+        ]
+    )
+
     # Combine everything into an Instance object
     instance = compute_v1.Instance()
     instance.name = instance_name
     instance.machine_type = machine_type
     instance.disks = [disk]
     instance.network_interfaces = [network_interface]
+    instance.metadata = metadata
+
+    instance = instance_client.get(project=project_id, zone=zone, instance=instance_name)
+    current_tags = list(instance.tags.items) if instance.tags.items else []
+    current_fingerprint = instance.tags.fingerprint
+
+    updated_tags_list = list(set(current_tags + ["allow-5000"]))
+
+    tags_resource = compute_v1.Tags(
+        items=updated_tags_list,
+        fingerprint=current_fingerprint
+    )
+
+    print(f"Updating tags on '{instance_name}' to: {updated_tags_list}...")
+    operation = instance_client.set_tags(
+        project=project_id,
+        zone=zone,
+        instance=instance_name,
+        tags_resource=tags_resource
+    )
+    operation.result()
+    print(f"Successfully added tags to VM '{instance_name}'!")
 
     # Prepare the request
     request = compute_v1.InsertInstanceRequest()

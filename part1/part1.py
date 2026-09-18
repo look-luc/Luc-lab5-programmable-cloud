@@ -20,6 +20,7 @@ def list_instances(compute, project, zone):
     return result['items'] if 'items' in result else None
 
 if __name__ == "__main__":
+    vm_app.create_instance()
     print("Your running instances are:")
     for instance in list_instances(service, project, 'us-west1-b'):
         print(instance['name'])
