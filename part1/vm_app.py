@@ -49,7 +49,7 @@ def create_instance(
         firewall_client.get(project=project_id, firewall="allow-5000")
     except Exception:
         firewall_rule = compute_v1.Firewall(
-            name="allow-tcp-5000",
+            name="allow-5000",
             direction="INGRESS",
             priority=1000,
             network="global/networks/default",
@@ -62,7 +62,7 @@ def create_instance(
             source_ranges=["0.0.0.0/0"],
             target_tags=["allow-5000"]
         )
-        print("Creating firewall rule 'allow-tcp-5000'...")
+        print("Creating firewall rule 'allow-5000'...")
 
         operation = firewall_client.insert(
             project=project_id,
@@ -127,3 +127,8 @@ def create_instance(
     # Wait for the operation to complete
     operation.result()
     print(f"Instance {instance_name} successfully created!")
+
+    created_instance = instance_client.get(project=project_id, zone=zone, instance=instance_name)
+    public_ip = created_instance.network_interfaces[0].access_configs[0].nat_ip
+
+    print(f"\nThe Flask application is available at:\nhttp://{public_ip}:500")
