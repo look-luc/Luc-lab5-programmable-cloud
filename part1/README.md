@@ -1,3 +1,6 @@
+# Results
+Here is a screenshot of creating the VM:
+
 # Part One - Program to Create a VM and install an Application
 
 In this part, you're going to write a simple program to create a VM install the [flask tutorial application](https://github.com/cu-csci-4253-datacenter/flask-tutorial). In later labs, we'll be using [Flask](https://palletsprojects.com/p/flask/) to write a simple REST interface.
