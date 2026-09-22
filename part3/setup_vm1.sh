@@ -1,9 +1,16 @@
-mkdir -p /srv
-cd /srv || exit
-curl http://metadata/computeMetadata/v1/instance/attributes/vm2-startup-script -H "Metadata-Flavor: Google" > vm2-startup-script.sh
-curl http://metadata/computeMetadata/v1/instance/attributes/service-credentials -H "Metadata-Flavor: Google" > service-credentials.json
-curl http://metadata/computeMetadata/v1/instance/attributes/vm1-launch-vm2-code -H "Metadata-Flavor: Google" > vm1-launch-vm2-code.py
-export GOOGLE_CLOUD_PROJECT= $(curl http://metadata/computeMetadata/v1/instance/attributes/project -H "Metadata-Flavor: Google")
+#!/bin/bash
 
-pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
-python3 ./vm1-launch-code.py
+mkdir -p /srv
+cd /srv || exit 1
+
+curl -s http://metadata/computeMetadata/v1/instance/attributes/vm2-startup-script -H "Metadata-Flavor: Google" > vm2-startup-script.sh
+curl -s http://metadata/computeMetadata/v1/instance/attributes/service-credentials -H "Metadata-Flavor: Google" > service-credentials.json
+curl -s http://metadata/computeMetadata/v1/instance/attributes/vm1-launch-vm2-code -H "Metadata-Flavor: Google" > vm1-launch-vm2-code.py
+
+export GOOGLE_CLOUD_PROJECT=$(curl -s http://metadata/computeMetadata/v1/instance/attributes/project -H "Metadata-Flavor: Google")
+
+sudo apt-get update
+sudo apt-get install -y python3 python3-pip git
+pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib google-cloud-compute
+
+python3 ./vm1-launch-vm2-code.py
