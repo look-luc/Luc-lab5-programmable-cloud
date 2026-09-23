@@ -1,5 +1,5 @@
 # Results
-Here is a screenshot of creating the VM:
+Here is a screenshot of creating the VM: <img src="vm_made.png" alt="part1 VM made" style="width:450px;">
 
 # Part One - Program to Create a VM and install an Application
 

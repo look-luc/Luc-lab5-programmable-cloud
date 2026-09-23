@@ -53,7 +53,7 @@ def create_instance(
         operation.result()
         print("Firewall rule successfully created!")
 
-    with open("./part2/setup.sh", "r") as file:
+    with open("../part1/setup.sh", "r") as file:
         bash_file = file.read()
 
     metadata = compute_v1.Metadata(
