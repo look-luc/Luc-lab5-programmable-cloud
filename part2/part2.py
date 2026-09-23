@@ -37,7 +37,7 @@ def list_instances(compute, project, zone):
 
 
 if __name__ == "__main__":
-    instances = list_instances(service, project, "us-west1-a")
+    instances = list_instances(service, project, "us-west1-c")
     base_snapshot = None
 
     if instances:

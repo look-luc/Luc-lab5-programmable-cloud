@@ -96,7 +96,7 @@ def launch_vm1(
 if __name__ == "__main__":
     launch_vm1(
         project_id=project,
-        zone="us-west1-a",
+        zone="us-west1-c",
         vm1_name="vm1-launcher",
         vm1_bash_name="setup_vm1.sh",
         vm2_bash_name="vm1_launch_vm2.py",
@@ -104,5 +104,5 @@ if __name__ == "__main__":
     )
 
     print("\nYour running instances are:")
-    for instance in list_instances(service, project, 'us-west1-a'):
+    for instance in list_instances(service, project, 'us-west1-c'):
         print(instance['name'])

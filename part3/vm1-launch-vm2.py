@@ -8,7 +8,7 @@ from google.cloud import compute_v1
 # Load explicit service account credentials saved from metadata
 credentials = service_account.Credentials.from_service_account_file('service-credentials.json')
 project_id = os.getenv('GOOGLE_CLOUD_PROJECT') or 'lab5-509001'
-zone = 'us-west1-a'
+zone = 'us-west1-c'
 vm2_name = 'vm2-flask-app'
 
 instance_client = compute_v1.InstancesClient(credentials=credentials)

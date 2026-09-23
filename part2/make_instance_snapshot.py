@@ -3,7 +3,7 @@ from google.cloud import compute_v1
 
 def create_instance(
     project_id: str = "lab5-509001",
-    zone: str = "us-west1-a",
+    zone: str = "us-west1-c",
     instance_name: str = "part_1_lab5",
     snapshot_name: str = "YOUR_SNAPSHOT_NAME",
 ):
