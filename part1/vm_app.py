@@ -17,7 +17,7 @@ def get_adc_credentials():
 
 def create_instance(
     project_id: str = "lab5-509001",
-    zone: str = "us-west1-b",
+    zone: str = "us-west1-a",
     instance_name: str = "part-1-lab5",
 ):
     instance_client = compute_v1.InstancesClient()

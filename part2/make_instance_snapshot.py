@@ -3,7 +3,7 @@ from google.cloud import compute_v1
 
 def create_instance(
     project_id: str = "lab5-509001",
-    zone: str = "us-west1-b",
+    zone: str = "us-west1-a",
     instance_name: str = "part_1_lab5",
     snapshot_name: str = "YOUR_SNAPSHOT_NAME",
 ):
@@ -53,7 +53,7 @@ def create_instance(
         operation.result()
         print("Firewall rule successfully created!")
 
-    with open("setup.sh", "r") as file:
+    with open("./part2/setup.sh", "r") as file:
         bash_file = file.read()
 
     metadata = compute_v1.Metadata(
