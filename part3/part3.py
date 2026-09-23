@@ -3,12 +3,16 @@
 import argparse
 import os
 import time
+from pathlib import Path
 from pprint import pprint
 
 import google.auth
 import google.oauth2.service_account as service_account
 import googleapiclient.discovery
 from google.cloud import compute_v1
+
+# Resolve base directory (part3)
+SCRIPT_DIR = Path(__file__).resolve().parent
 
 #
 # Use Google Service Account - See https://google-auth.readthedocs.io/en/latest/reference/google.oauth2.service_account.html#module-google.oauth2.service_account
@@ -34,7 +38,7 @@ def launch_vm1(
     vm2_bash_name_setup: str,
     key_path: str = KEY_PATH
 ):
-    machine_type = f"zones/{zone}/machineTypes/f1-micro"
+    machine_type = f"zones/{zone}/machineTypes/e2-micro"
     source_image = "projects/ubuntu-os-cloud/global/images/family/ubuntu-2204-lts"
 
     with open(vm1_bash_name, 'r') as f:
@@ -98,9 +102,10 @@ if __name__ == "__main__":
         project_id=project,
         zone="us-west1-b",
         vm1_name="vm1-launcher",
-        vm1_bash_name="setup_vm1.sh",
-        vm2_bash_name="vm1_launch_vm2.py",
-        vm2_bash_name_setup="setup.sh"
+        vm1_bash_name=str(SCRIPT_DIR / "setup_vm1.sh"),
+        vm2_bash_name=str(SCRIPT_DIR / "vm1-launch-vm2.py"),  # Fixed hyphenation
+        vm2_bash_name_setup=str(SCRIPT_DIR.parent / "part1" / "setup.sh"), # Point to part1 setup.sh
+        key_path=str(SCRIPT_DIR / "lab5-509001-dc1e1e9a4cd7.json")
     )
 
     print("\nYour running instances are:")
