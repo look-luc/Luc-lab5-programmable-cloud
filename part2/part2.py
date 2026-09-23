@@ -11,6 +11,9 @@ credentials, project = google.auth.default()
 service = googleapiclient.discovery.build("compute", "v1", credentials=credentials)
 
 
+from google.api_core.exceptions import Conflict
+
+
 def create_gcp_snapshot(project_id, disk_name, zone, snapshot_name):
     disk_client = compute_v1.DisksClient()
     snapshot_client = compute_v1.SnapshotsClient()
@@ -22,14 +25,16 @@ def create_gcp_snapshot(project_id, disk_name, zone, snapshot_name):
     )
 
     print(f"Creating snapshot '{snapshot_name}' from disk '{disk_name}'...")
-    operation = snapshot_client.insert(
-        project=project_id, snapshot_resource=snapshot_resource
-    )
-    operation.result()  # Wait for snapshot creation to complete
-    print(f"Snapshot '{snapshot_name}' successfully created!")
+    try:
+        operation = snapshot_client.insert(
+            project=project_id, snapshot_resource=snapshot_resource
+        )
+        operation.result()  # Wait for snapshot creation to complete
+        print(f"Snapshot '{snapshot_name}' successfully created!")
+    except Conflict:
+        print(f"Snapshot '{snapshot_name}' already exists. Reusing existing snapshot.")
 
     return snapshot_name
-
 
 def list_instances(compute, project, zone):
     result = compute.instances().list(project=project, zone=zone).execute()
