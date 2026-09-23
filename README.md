@@ -1,3 +1,6 @@
+#Results
+Here is a screenshot of creating the VM: <img src="all_vms.png" alt="part1 Flask page made" style="width:450px;">
+
 # lab5-programmable-cloud
 
 An assignment demonstrating programmatic interfaces to cloud computing software.
@@ -106,4 +109,3 @@ After completing this assignment, you should be able to:
 * Create and use service accounts.
 * Understand how IAM permissions control what an application running in the cloud can do.
 * Use one cloud-hosted application to programmatically create additional cloud resources.
-

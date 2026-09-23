@@ -1,3 +1,6 @@
+#Results
+Here is a screenshot of creating the VMs: <img src="part3_vms.png" alt="part1 Flask page made" style="width:450px;">
+
 # Part3 - Creating VM using a VM
 
 In this task, you're going to create a program that runs in a VM
