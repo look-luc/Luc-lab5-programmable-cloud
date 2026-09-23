@@ -76,5 +76,5 @@ operation.result()
 print(f"VM 2 ({vm2_name}) successfully launched!")
 
 created_instance = instance_client.get(project=project_id, zone=zone, instance=vm2_name)
-public_ip = created_instance.network_interfaces[0].access_configs[0].nat_ip
+public_ip = created_instance.network_interfaces[0].access_configs[0].nat_i_p
 print(f"\nThe Flask application is available at:\nhttp://{public_ip}:5000")

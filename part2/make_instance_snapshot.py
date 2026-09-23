@@ -83,6 +83,6 @@ def create_instance(
     created_instance = instance_client.get(
         project=project_id, zone=zone, instance=instance_name
     )
-    public_ip = created_instance.network_interfaces[0].access_configs[0].nat_ip
+    public_ip = created_instance.network_interfaces[0].access_configs[0].nat_i_p
 
     print(f"\nThe Flask application is available at:\nhttp://{public_ip}:5000")
