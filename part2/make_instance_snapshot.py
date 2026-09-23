@@ -3,14 +3,14 @@ from google.cloud import compute_v1
 
 def create_instance(
     project_id: str = "lab5-509001",
-    zone: str = "us-west1-c",
+    zone: str = "us-west1-b",
     instance_name: str = "part_1_lab5",
     snapshot_name: str = "YOUR_SNAPSHOT_NAME",
 ):
     # Initialize the client
     instance_client = compute_v1.InstancesClient()
 
-    machine_type = f"zones/{zone}/machineTypes/f1-micro"
+    machine_type = f"zones/{zone}/machineTypes/e2-micro"
     source_snapshot = f"projects/{project_id}/global/snapshots/{snapshot_name}"
 
     disk = compute_v1.AttachedDisk()

@@ -17,12 +17,12 @@ def get_adc_credentials():
 
 def create_instance(
     project_id: str = "lab5-509001",
-    zone: str = "us-west1-c",
+    zone: str = "us-west1-b",
     instance_name: str = "part-1-lab5",
 ):
     instance_client = compute_v1.InstancesClient()
 
-    machine_type = f"zones/{zone}/machineTypes/f1-micro"
+    machine_type = f"zones/{zone}/machineTypes/e2-micro"
     source_image = "projects/ubuntu-os-cloud/global/images/family/ubuntu-2204-lts"
 
     disk = compute_v1.AttachedDisk()
