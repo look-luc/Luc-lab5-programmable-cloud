@@ -13,7 +13,7 @@ from google.cloud import compute_v1
 #
 # Use Google Service Account - See https://google-auth.readthedocs.io/en/latest/reference/google.oauth2.service_account.html#module-google.oauth2.service_account
 #
-KEY_PATH = "part3/lab5-509001-dc1e1e9a4cd7.json"
+KEY_PATH = "./lab5-509001-dc1e1e9a4cd7.json"
 credentials = service_account.Credentials.from_service_account_file(filename=KEY_PATH)
 project = os.getenv('GOOGLE_CLOUD_PROJECT') or 'lab5-509001'
 service = googleapiclient.discovery.build('compute', 'v1', credentials=credentials)
