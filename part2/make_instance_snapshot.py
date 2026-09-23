@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from google.cloud import compute_v1
 
 
@@ -53,7 +55,10 @@ def create_instance(
         operation.result()
         print("Firewall rule successfully created!")
 
-    with open("../part1/setup.sh", "r") as file:
+    script_dir = Path(__file__).resolve().parent
+    setup_sh_path = script_dir.parent / "part1" / "setup.sh"
+
+    with open(setup_sh_path, "r") as file:
         bash_file = file.read()
 
     metadata = compute_v1.Metadata(
